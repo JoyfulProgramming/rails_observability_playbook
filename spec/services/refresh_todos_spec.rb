@@ -36,5 +36,15 @@ RSpec.describe RefreshTodos do
         end
       end
     end
+
+    context "it logs the API details" do
+      it "logs the API details" do
+        VCR.use_cassette("all todos") do
+          info_logs = capture_logs { subject.call_async }
+                        .select { |log| log["level"] == "info" }
+          expect(info_logs).to eq([])
+        end
+      end
+    end
   end
 end
