@@ -71,3 +71,5 @@ end
 gem "semantic_logger", "~> 4.15"
 
 gem "rails_semantic_logger", "~> 4.14"
+
+gem "faraday", "~> 2.9"
