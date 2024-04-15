@@ -1,0 +1,13 @@
+<h1>Here are your todos</h1>
+
+<%= link_to 'Refresh', refresh_todos_path %>
+
+<% if @todos.empty? %>
+  <p>You have no todos</p>
+<% else %>
+  <ul>
+    <% @todos.each do |todo| %>
+      <li><%= todo.title %></li>
+    <% end %>
+  </ul>
+<% end %>

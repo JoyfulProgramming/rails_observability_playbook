@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  root "home#show"
+  root "todos#index"
+  get "/refresh", to: "todos#refresh", as: :refresh_todos
 end

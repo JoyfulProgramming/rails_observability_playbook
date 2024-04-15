@@ -36,3 +36,5 @@ group :test do
   gem "webdrivers"
   gem "webmock", "~> 3.23"
 end
+
+gem "dry-struct", "~> 1.6"
