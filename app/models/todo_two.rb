@@ -1,0 +1,2 @@
+class TodoTwo < ApplicationRecord
+end
