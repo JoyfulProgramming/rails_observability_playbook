@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Path: app/controllers/todos_controller.rb
 class TodosController < ApplicationController
   def index
     @todos = Todo.all
