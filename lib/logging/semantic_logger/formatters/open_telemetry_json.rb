@@ -18,21 +18,17 @@ module Logging
         def payload
           return if log.payload.to_h.empty?
 
-          payload_with_nested_attributes = log.
-                                           payload.
-                                           then(&nest_http_attributes).
-                                           then(&nest_db_statement)
-          hash.
-            deep_merge!(payload_with_nested_attributes).
-            then { |payload| @sensitive_data_filter.filter(payload) }
+          hash
+            .deep_merge!(log.payload)
+            .then { |payload| @sensitive_data_filter.filter(payload) }
         end
 
         def named_tags
           return if log.named_tags.to_h.empty?
 
-          hash.
-            deep_merge!(log.named_tags).
-            then { |payload| @sensitive_data_filter.filter(payload) }
+          hash
+            .deep_merge!(log.named_tags)
+            .then { |payload| @sensitive_data_filter.filter(payload) }
         end
 
         def exception
@@ -44,7 +40,7 @@ module Logging
             root[name] = {
               name: exception.class.name,
               message: exception.message,
-              stack_trace: exception.backtrace,
+              stack_trace: exception.backtrace
             }.merge(context: decorated_exception(exception).context)
             root = root[name]
           end
@@ -53,8 +49,8 @@ module Logging
         private
 
         module HTTPAttributes
-          BASE = [:headers, :format, :method, :params, :status, :status_message, :url].freeze
-          RAILS = [:action, :controller].freeze
+          BASE = %i[headers format method params status status_message url].freeze
+          RAILS = %i[action controller].freeze
           ALL = BASE + RAILS
         end
 
@@ -65,54 +61,6 @@ module Logging
         def exception_decorator_class(exception)
           "Logging::ExceptionDecorators::#{exception.class.name}Decorator".safe_constantize ||
             Logging::ExceptionDecorators::BaseDecorator
-        end
-
-        def nest_http_attributes
-          lambda do |payload|
-            payload
-              .deep_merge(
-                http: {
-                  server: {
-                    request: {
-                      duration: payload[:duration],
-                    }
-                  },
-                  request: { action: payload[:action], resource: payload[:controller] }.then(&add_resource),
-                  response: { status_code: payload[:status] }
-                }
-              )
-          end
-        end
-
-        def add_resource
-          lambda do |rails_attrs|
-            return rails_attrs if rails_attrs[:controller].blank? || rails_attrs[:action].blank?
-
-            resource = (rails_attrs[:controller] || "").underscore.gsub(/_controller$/, "")
-            rails_attrs.merge(
-              resource: resource,
-              resource_and_action: "#{resource}##{rails_attrs[:action]}",
-            )
-          end
-        end
-
-        def nest_db_statement
-          lambda do |payload|
-            return payload.except(:sql) if payload.exclude?(:sql) || payload[:sql].blank?
-
-            payload.
-              except(:sql).
-              deep_merge(
-                db: {
-                  statement: payload.fetch(:sql).to_s,
-                  operation: payload.fetch(:sql).to_s.split.first,
-                },
-              )
-          end
-        end
-
-        def rename_status_to_status_code
-          ->(key) { key == :status ? :status_code : key }
         end
       end
     end

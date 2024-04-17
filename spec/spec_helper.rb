@@ -20,7 +20,7 @@ end
 
 SuperDiff.configure do |config|
   config.key_enabled = false
-  config.diff_elision_enabled = false
+  config.diff_elision_enabled = true
   config.diff_elision_maximum = 3
   config.actual_color = :green
   config.expected_color = :red

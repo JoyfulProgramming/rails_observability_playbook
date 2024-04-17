@@ -54,13 +54,11 @@ RSpec.describe RefreshTodos do
               host: 'Johns-MacBook-Pro.local',
               http: {
                 request: {
-                  action: nil,
                   body: nil,
                   headers: {
                     "User-Agent": 'Faraday v2.9.0'
                   },
                   method: 'GET',
-                  resource: nil,
                   url: 'https://jsonplaceholder.typicode.com/todos'
                 },
                 response: {
@@ -91,13 +89,8 @@ RSpec.describe RefreshTodos do
                     "x-ratelimit-remaining": '999',
                     "x-ratelimit-reset": '1711142638'
                   },
-                  status_code: nil
+                  status_code: 200
                 },
-                server: {
-                  request: {
-                    duration: nil
-                  }
-                }
               },
 
               level: 'info',
