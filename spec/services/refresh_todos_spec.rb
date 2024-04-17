@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
+# rubocop:disable all
 RSpec.describe RefreshTodos do
   around do |example|
     perform_enqueued_jobs do
@@ -90,9 +93,8 @@ RSpec.describe RefreshTodos do
                     "x-ratelimit-reset": '1711142638'
                   },
                   status_code: 200
-                },
+                }
               },
-
               level: 'info',
               level_index: 2,
               message: 'GET https://jsonplaceholder.typicode.com/todos',
@@ -1311,3 +1313,4 @@ RSpec.describe RefreshTodos do
     ]
   end
 end
+# rubocop:enable all
