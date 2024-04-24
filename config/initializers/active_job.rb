@@ -40,7 +40,7 @@ OpenTelemetry::SDK.configure do |c|
   c.use 'OpenTelemetry::Instrumentation::Redis',
         { peer_service: nil, trace_root_spans: true, db_statement: :obfuscate }
   c.use 'OpenTelemetry::Instrumentation::Sidekiq',
-        { span_naming: :queue, propagation_style: :link, trace_launcher_heartbeat: false,
+        { span_naming: :job_class, propagation_style: :child, trace_launcher_heartbeat: false,
           trace_poller_enqueue: false, trace_poller_wait: false, trace_processor_process_one: false, peer_service: nil }
 
   if Rails.env.test?
