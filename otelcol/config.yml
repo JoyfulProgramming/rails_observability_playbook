@@ -15,7 +15,7 @@ exporters:
     ## If unset it will be determined from the `DD_HOST` environment variable.
     ## If both this and `DD_HOST` are unset, this will be determined automatically if possible.
     #
-    hostname: heroku-otel-example 
+    # hostname: heroku-otel-example 
 
     ## @param env - string - optional
     ## The environment for unified service tagging.
@@ -27,7 +27,7 @@ exporters:
     ## The service for unified service tagging.
     ## If unset it will be determined from the `DD_SERVICE` environment variable.
     #
-    # service:
+    service: rails-observability-playbook
 
     ## @param version - string - optional
     ## The version for unified service tagging.
@@ -63,7 +63,7 @@ exporters:
       ## Set to 'datadoghq.eu' to send data to the EU site.
       ## If unset it will be determined from the `DD_SITE` environment variable.
       #
-      # site: datadoghq.com
+      # site: datadoghq.eu
 
     ## @param metrics - custom object - optional
     ## Metric exporter specific configuration.
