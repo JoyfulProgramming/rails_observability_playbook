@@ -37,6 +37,7 @@ group :development do
 end
 
 group :test do
+  gem 'awesome_print', '~> 1.9'
   gem 'capybara'
   gem 'rspec', '~> 3.13'
   gem 'rspec-rails', '~> 6.1'
