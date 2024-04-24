@@ -1,7 +1,19 @@
 # frozen_string_literal: true
 
 require 'opentelemetry/sdk'
-OpenTelemetry::SDK.configure(&:use_all)
+
+OpenTelemetry::SDK.configure do |c|
+  c.use_all
+
+  if Rails.env.test?
+    c.logger = Logger.new(IO::NULL)
+    c.add_span_processor(
+      OpenTelemetry::SDK::Trace::Export::SimpleSpanProcessor.new(
+        OpenTelemetry::SDK::Trace::Export::InMemorySpanExporter.new
+      )
+    )
+  end
+end
 
 module Observable
   module Instrumentation
