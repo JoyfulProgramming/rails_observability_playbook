@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.1'
+ruby '3.1.5'
 
 gem 'bootsnap', require: false
 gem 'dry-struct', '~> 1.6'
@@ -47,3 +47,5 @@ group :test do
   gem 'webdrivers'
   gem 'webmock', '~> 3.23'
 end
+
+gem "bigdecimal", "~> 3.1"

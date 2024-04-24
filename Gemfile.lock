@@ -555,6 +555,7 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print (~> 1.9)
+  bigdecimal (~> 3.1)
   bootsnap
   capybara
   debug
@@ -589,7 +590,7 @@ DEPENDENCIES
   webmock (~> 3.23)
 
 RUBY VERSION
-   ruby 3.1.1p18
+   ruby 3.1.5p252
 
 BUNDLED WITH
    2.3.16
