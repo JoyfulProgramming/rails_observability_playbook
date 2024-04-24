@@ -12,6 +12,12 @@ OpenTelemetry::SDK.configure do |c|
         OpenTelemetry::SDK::Trace::Export::InMemorySpanExporter.new
       )
     )
+  elsif Rails.env.production?
+    c.add_span_processor(
+      OpenTelemetry::SDK::Trace::Export::BatchSpanProcessor.new(
+        OpenTelemetry::Exporter::OTLP::Exporter.new
+      )
+    )
   end
 end
 
