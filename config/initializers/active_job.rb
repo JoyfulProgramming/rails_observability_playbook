@@ -22,7 +22,6 @@ module Observable
       def subscribe
         {
           'enqueue' => Handlers::EnqueueHandler.new,
-          'enqueue_at' => Handlers::EnqueueHandler.new,
           'perform' => Handlers::PerformHandler.new
         }.each { |event, handler| ActiveSupport::Notifications.subscribe("#{event}.active_job", handler) }
       end
