@@ -47,7 +47,7 @@ RSpec.describe Todos::Refresh do
                      .select { |log| log[:level] == 'info' }
                      .find { |log| log.dig(:event, :name) == 'http.request.made' }
 
-          expect(info_log.except(:timestamp, :pid, :thread, :tags, :host)).to eq(
+          expect(info_log.deep_merge(http: { request: { headers: { traceparent: 'traceparent' }}})).to include_payload(
             {
               application: 'Semantic Logger',
               environment: 'test',
@@ -58,7 +58,8 @@ RSpec.describe Todos::Refresh do
                 request: {
                   body: nil,
                   headers: {
-                    "User-Agent": 'Faraday v2.9.0'
+                    "User-Agent": 'Faraday v2.9.0',
+                    traceparent: 'traceparent'
                   },
                   method: 'GET',
                   url: 'https://jsonplaceholder.typicode.com/todos'
@@ -105,10 +106,33 @@ RSpec.describe Todos::Refresh do
     end
 
     it "records background job details" do
+      VCR.use_cassette('all todos') do
+        job_performed_log = capture_logs { subject.call_async }
+                  .select { |log| log[:level] == 'info' }
+                  .find { |log| log[:"event.name"] == 'app.job.performed' }
+
+        expect(job_performed_log).to include_payload(
+          "code.namespace": "RefreshTodosJob",
+          "messaging.system": "active_job",
+          "messaging.destination": "within_five_minutes",
+          "messaging.message.id": active_job_guid_pattern,
+          "messaging.active_job.adapter.name": "async",
+          "message": "Job performed",
+          "event.name": "app.job.performed"
+        )
+      end
     end
   end
 
   private
+
+  def active_job_guid_pattern
+    /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/
+  end
+
+  def timestamp_pattern
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+Z$/
+  end
 
   def expected_body
     [

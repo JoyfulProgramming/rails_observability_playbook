@@ -27,3 +27,36 @@ SuperDiff.configure do |config|
   config.border_color = :yellow
   config.header_color = :yellow
 end
+
+RSpec::Matchers.define :include_payload do |expected|
+  match do |actual|
+    matcher = lambda do |(key, value)|
+      if value.is_a?(Regexp)
+        actual[key] =~ value
+      else
+        actual[key] == value
+      end
+    end
+    expected.all?(&matcher)
+  end
+
+  description do
+    "include payload #{expected}"
+  end
+
+  failure_message do |actual|
+    matcher = lambda do |key, value|
+      if value.is_a?(Regexp)
+        actual[key] =~ value
+      else
+        actual[key] == value
+      end
+    end
+    differences = expected.reject(&matcher).to_h
+    "Expected to include payload but did not. Differences:\n\n#{SuperDiff::Differs::Main.call(actual.slice(*differences.keys), differences)}"
+  end
+
+  failure_message_when_negated do |actual|
+    'N/A'
+  end
+end
