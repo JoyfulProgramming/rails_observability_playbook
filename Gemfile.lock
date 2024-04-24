@@ -489,6 +489,9 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.19.0)
+    spring (4.2.1)
+    spring-commands-rspec (1.0.4)
+      spring (>= 0.9.1)
     standard (1.35.1)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
@@ -567,6 +570,8 @@ DEPENDENCIES
   selenium-webdriver
   semantic_logger (~> 4.15)
   sidekiq (~> 7.2)
+  spring (~> 4.2)
+  spring-commands-rspec (~> 1.0)
   standardrb
   stimulus-rails
   super_diff (~> 0.11.0)

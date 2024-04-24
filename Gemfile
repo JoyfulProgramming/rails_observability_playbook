@@ -24,6 +24,8 @@ group :development, :test do
 end
 
 group :development do
+  gem 'spring', '~> 4.2'
+  gem 'spring-commands-rspec', '~> 1.0'
   gem 'standardrb'
   gem 'web-console'
 end
