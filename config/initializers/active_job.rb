@@ -4,6 +4,11 @@ require 'opentelemetry/sdk'
 
 OpenTelemetry::SDK.configure do |c|
   c.use_all
+  c.use 'OpenTelemetry::Instrumentation::ActiveJob', {
+    span_naming: :job_class,      # Options are :job_class or :queue
+    force_flush: true,            # Options are true or false
+    propagation_style: :child     # Options are :link, :child, or :none
+  }
 
   if Rails.env.test?
     c.logger = Logger.new(IO::NULL)
