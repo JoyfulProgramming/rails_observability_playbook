@@ -7,7 +7,7 @@ class TodosController < ApplicationController
   end
 
   def refresh
-    RefreshTodos.new.call_async
+    Todos::Refresh.new.call_async
     redirect_to root_path
   end
 end
