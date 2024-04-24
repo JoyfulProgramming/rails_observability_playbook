@@ -80,7 +80,4 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  database: rails_observability_playbook_production
-  username: rails_observability_playbook
-  password: <%= ENV["RAILS_OBSERVABILITY_PLAYBOOK_DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>
