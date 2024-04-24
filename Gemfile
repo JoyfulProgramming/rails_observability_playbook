@@ -47,3 +47,7 @@ group :test do
   gem 'webdrivers'
   gem 'webmock', '~> 3.23'
 end
+
+gem "sentry-ruby", "~> 5.17"
+
+gem "sentry-rails", "~> 5.17"
