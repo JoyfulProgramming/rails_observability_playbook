@@ -37,8 +37,6 @@ OpenTelemetry::SDK.configure do |c|
         { peer_service: nil, db_statement: :obfuscate, obfuscation_limit: 2000 }
   c.use 'Instrumentation: OpenTelemetry::Instrumentation::Rails'
   c.use 'OpenTelemetry::Instrumentation::Rake'
-  c.use 'OpenTelemetry::Instrumentation::Redis',
-        { peer_service: nil, trace_root_spans: true, db_statement: :obfuscate }
 
   if Rails.env.test?
     c.logger = Logger.new(IO::NULL)
