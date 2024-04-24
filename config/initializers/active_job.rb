@@ -5,8 +5,8 @@ require 'opentelemetry/sdk'
 OpenTelemetry::SDK.configure do |c|
   c.use_all
 
-  c.logger = Logger.new(IO::NULL)
   if Rails.env.test?
+    c.logger = Logger.new(IO::NULL)
     c.add_span_processor(
       OpenTelemetry::SDK::Trace::Export::SimpleSpanProcessor.new(
         OpenTelemetry::SDK::Trace::Export::InMemorySpanExporter.new
