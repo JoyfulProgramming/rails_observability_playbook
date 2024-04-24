@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 # rubocop:disable all
-RSpec.describe RefreshTodos do
+RSpec.describe Todos::Refresh do
   around do |example|
     perform_enqueued_jobs do
       example.run
@@ -47,14 +47,13 @@ RSpec.describe RefreshTodos do
                      .select { |log| log[:level] == 'info' }
                      .find { |log| log.dig(:event, :name) == 'http.request.made' }
 
-          expect(info_log.except(:timestamp, :pid, :thread, :tags)).to eq(
+          expect(info_log.except(:timestamp, :pid, :thread, :tags, :host)).to eq(
             {
               application: 'Semantic Logger',
               environment: 'test',
               event: {
                 name: 'http.request.made'
               },
-              host: 'Johns-MacBook-Pro.local',
               http: {
                 request: {
                   body: nil,
@@ -103,6 +102,9 @@ RSpec.describe RefreshTodos do
           )
         end
       end
+    end
+
+    it "records background job details" do
     end
   end
 
