@@ -1,0 +1,10 @@
+schema-version: v2.2
+dd-service: rails-observability-playbook
+links:
+  - type: repo
+    name: Rails Observability Playbook
+    url: https://github.com/JoyfulProgramming/rails_observability_playbook.git
+    provider: github
+type: web
+languages:
+  - ruby
