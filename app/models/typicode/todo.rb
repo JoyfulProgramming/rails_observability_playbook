@@ -13,6 +13,7 @@ module Typicode
 
     def self.api
       Faraday.new(url: 'https://jsonplaceholder.typicode.com/todos') do |conn|
+        conn.use FaradayLogging
         conn.request :json
         conn.response :json, parser_options: { symbolize_names: true }
       end
