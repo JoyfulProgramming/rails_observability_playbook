@@ -20,6 +20,8 @@ gem 'rails', '~> 7.0.4'
 gem 'rails_semantic_logger', '~> 4.14'
 gem 'redis', '~> 4.0'
 gem 'semantic_logger', '~> 4.15'
+gem 'sentry-rails', '~> 5.17'
+gem 'sentry-ruby', '~> 5.17'
 gem 'sidekiq', '~> 7.2'
 gem 'stimulus-rails'
 gem 'turbo-rails'
@@ -47,7 +49,3 @@ group :test do
   gem 'webdrivers'
   gem 'webmock', '~> 3.23'
 end
-
-gem "sentry-ruby", "~> 5.17"
-
-gem "sentry-rails", "~> 5.17"

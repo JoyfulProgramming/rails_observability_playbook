@@ -105,21 +105,26 @@ RSpec.describe Todos::Refresh do
       end
     end
 
-    it "records background job details" do
+    it "records background job details in the trace" do
       VCR.use_cassette('all todos') do
-        job_performed_log = capture_logs { subject.call_async }
-                  .select { |log| log[:level] == 'info' }
-                  .find { |log| log[:"event.name"] == 'app.job.performed' }
-
-        expect(job_performed_log).to include_payload(
-          "code.namespace": "RefreshTodosJob",
-          "messaging.system": "active_job",
-          "messaging.destination": "within_five_minutes",
-          "messaging.message.id": active_job_guid_pattern,
-          "messaging.active_job.adapter.name": "async",
-          "message": "Job performed",
-          "event.name": "app.job.performed"
-        )
+        subject.call_async
+        job_spans = spans.in_root_trace.in_code_namespace("RefreshTodosJob")
+        aggregate_failures do
+          expect(job_spans.find(&:producer?).attrs).to match(
+            "code.namespace" => "RefreshTodosJob",
+            "messaging.system" => "active_job",
+            "messaging.destination" => "within_five_minutes",
+            "messaging.message.id" => active_job_guid_pattern,
+            "messaging.active_job.adapter.name" => "async"
+          )
+          expect(job_spans.find(&:consumer?).attrs).to match(
+            "code.namespace" => "RefreshTodosJob",
+            "messaging.system" => "active_job",
+            "messaging.destination" => "within_five_minutes",
+            "messaging.message.id" => active_job_guid_pattern,
+            "messaging.active_job.adapter.name" => "async"
+          )
+        end
       end
     end
   end
@@ -134,6 +139,7 @@ RSpec.describe Todos::Refresh do
     /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+Z$/
   end
 
+# rubocop:disable all
   def expected_body
     [
       {
@@ -1338,5 +1344,5 @@ RSpec.describe Todos::Refresh do
       }
     ]
   end
-end
 # rubocop:enable all
+end

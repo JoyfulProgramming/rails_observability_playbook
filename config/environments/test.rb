@@ -57,4 +57,8 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+  config.open_telemetry_exporter = OpenTelemetry::SDK::Trace::Export::InMemorySpanExporter.new
+  config.open_telemetry_span_processor = OpenTelemetry::SDK::Trace::Export::SimpleSpanProcessor.new(
+    config.open_telemetry_exporter
+  )
 end

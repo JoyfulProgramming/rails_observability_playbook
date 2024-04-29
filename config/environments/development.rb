@@ -65,4 +65,9 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  config.open_telemetry_exporter = OpenTelemetry::SDK::Trace::Export::InMemorySpanExporter.new
+  config.open_telemetry_span_processor = OpenTelemetry::SDK::Trace::Export::SimpleSpanProcessor.new(
+    config.open_telemetry_exporter
+  )
 end

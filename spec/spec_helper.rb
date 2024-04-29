@@ -2,6 +2,11 @@
 
 require 'support/vcr'
 require 'support/logging/test_helper'
+require 'support/persistence/span'
+require 'support/persistence/span_repo'
+require 'support/persistence/trace'
+require 'support/persistence/trace_repo'
+require 'support/tracing/test_helper'
 require 'super_diff/rspec-rails'
 
 RSpec.configure do |config|
@@ -17,6 +22,7 @@ RSpec.configure do |config|
   config.shared_context_metadata_behavior = :apply_to_host_groups
   config.disable_monkey_patching!
   config.order = :random
+  config.include Tracing::TestHelper
 end
 
 SuperDiff.configure do |config|
