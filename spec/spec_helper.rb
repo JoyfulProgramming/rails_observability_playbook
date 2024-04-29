@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'dry/struct'
 require 'support/vcr'
 require 'support/logging/test_helper'
 require 'support/persistence/span'

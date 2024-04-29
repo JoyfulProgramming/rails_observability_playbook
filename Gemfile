@@ -11,7 +11,10 @@ gem 'faraday', '~> 2.9'
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'opentelemetry-exporter-otlp', '~> 0.26.3'
-gem 'opentelemetry-instrumentation-all', '~> 0.60.0'
+gem 'opentelemetry-instrumentation-all',
+    github: 'joyfulprogramming/opentelemetry-ruby-contrib',
+    branch: 'main',
+    glob: 'instrumentation/*/*.gemspec'
 gem 'opentelemetry-sdk', '~> 1.4'
 gem 'pg', '~> 1.1'
 gem 'propshaft'

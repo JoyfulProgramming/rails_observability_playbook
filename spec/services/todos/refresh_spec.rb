@@ -115,14 +115,17 @@ RSpec.describe Todos::Refresh do
             "messaging.system" => "active_job",
             "messaging.destination" => "within_five_minutes",
             "messaging.message.id" => active_job_guid_pattern,
-            "messaging.active_job.adapter.name" => "async"
+            "messaging.active_job.adapter.name" => "async",
+            "com.joyful_programming.messaging.message.retry_count" => 0,
           )
           expect(job_spans.find(&:consumer?).attrs).to match(
             "code.namespace" => "RefreshTodosJob",
             "messaging.system" => "active_job",
             "messaging.destination" => "within_five_minutes",
             "messaging.message.id" => active_job_guid_pattern,
-            "messaging.active_job.adapter.name" => "async"
+            "messaging.active_job.adapter.name" => "async",
+            "com.joyful_programming.messaging.message.retry_count" => 0,
+            "com.joyful_programming.messaging.message.latency" => instance_of(Float)
           )
         end
       end
