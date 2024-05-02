@@ -4,6 +4,8 @@
 
 A very simple example Rails app with Open Telemetry installed.
 
+Accompanies my [Rails Observability Playbook](https://joyfulprogramming.notion.site/fb1d870b30b547b6b029d5c48ab300a9) in Notion.
+
 Running on Heroku and is set up to send data to Datadog, but the app is vendor agnostic.
 
 ## Why?
