@@ -52,3 +52,7 @@ group :test do
   gem 'webdrivers'
   gem 'webmock', '~> 3.23'
 end
+
+gem "pry", "~> 0.14.2"
+
+gem "foreman", "~> 0.88.1"
