@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'sidekiq/testing'
 
 # rubocop:disable all
 RSpec.describe Todos::Refresh do
   around do |example|
-    perform_enqueued_jobs do
+    Sidekiq::Testing.inline! do
       example.run
     end
   end
@@ -108,24 +109,14 @@ RSpec.describe Todos::Refresh do
     it "records background job details in the trace" do
       VCR.use_cassette('all todos') do
         subject.call_async
-        job_spans = spans.in_root_trace.in_code_namespace("RefreshTodosJob")
+        job_spans = spans.in_code_namespace("RefreshTodosJob")
         aggregate_failures do
           expect(job_spans.find(&:producer?).attrs).to match(
-            "code.namespace" => "RefreshTodosJob",
-            "messaging.system" => "active_job",
+            "messaging.sidekiq.job_class" => "RefreshTodosJob",
+            "messaging.system" => "sidekiq",
+            "messaging.message_id" => sidekiq_job_guid_pattern,
             "messaging.destination" => "within_five_minutes",
-            "messaging.message.id" => active_job_guid_pattern,
-            "messaging.active_job.adapter.name" => "async",
-            "com.joyful_programming.messaging.message.retry_count" => 0,
-          )
-          expect(job_spans.find(&:consumer?).attrs).to match(
-            "code.namespace" => "RefreshTodosJob",
-            "messaging.system" => "active_job",
-            "messaging.destination" => "within_five_minutes",
-            "messaging.message.id" => active_job_guid_pattern,
-            "messaging.active_job.adapter.name" => "async",
-            "com.joyful_programming.messaging.message.retry_count" => 0,
-            "com.joyful_programming.messaging.message.latency" => instance_of(Float)
+            "messaging.destination_kind" => "queue",
           )
         end
       end
@@ -133,6 +124,10 @@ RSpec.describe Todos::Refresh do
   end
 
   private
+  
+  def sidekiq_job_guid_pattern
+    /^[0-9a-f]{24}$/
+  end
 
   def active_job_guid_pattern
     /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/

@@ -5,10 +5,14 @@ require 'opentelemetry/sdk'
 # rubocop:disable Metrics/BlockLength
 OpenTelemetry::SDK.configure do |c|
   c.use 'OpenTelemetry::Instrumentation::Rails'
-  c.use 'OpenTelemetry::Instrumentation::ActiveJob', {
-    span_naming: :job_class,      # Options are :job_class or :queue
-    force_flush: true,            # Options are true or false
-    propagation_style: :child     # Options are :link, :child, or :none
+  c.use 'OpenTelemetry::Instrumentation::Sidekiq', {
+    span_naming: :job_class,
+    propagation_style: :child,
+    trace_launcher_heartbeat: false,
+    trace_poller_enqueue: false,
+    trace_poller_wait: false,
+    trace_processor_process_one: false,
+    peer_service: nil
   }
   c.use 'OpenTelemetry::Instrumentation::ActiveSupport'
   c.use 'OpenTelemetry::Instrumentation::Rack', {

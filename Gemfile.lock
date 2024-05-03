@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/joyfulprogramming/opentelemetry-ruby-contrib.git
-  revision: a88b7c6f8bdf726863fdafc035eb0cf54c548e1d
+  revision: 44aa13d8a193463212bc5ca7ecf62a19f0aae5a4
   branch: main
   glob: instrumentation/*/*.gemspec
   specs:
