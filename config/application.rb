@@ -1,6 +1,6 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails/all"
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -22,20 +22,20 @@ module RailsObservabilityPlaybook
 
     config.log_tags = {
       event: {
-        name: "http.request.handled",
+        name: 'http.request.handled'
       },
       http: lambda do |request|
         {
           request: {
             id: request.request_id,
             header: request
-                      .headers
-                      .to_h
-                      .select { |key, _value| key.start_with?("HTTP_") }
-                      .transform_keys { |key| key.sub(/^HTTP_/, "").downcase }
-                      .then { |headers| ActiveSupport::ParameterFilter.new(Rails.configuration.filter_parameters).filter(headers) },
+              .headers
+              .to_h
+              .select { |key, _value| key.start_with?('HTTP_') }
+              .transform_keys { |key| key.sub(/^HTTP_/, '').downcase }
+              .then { |headers| ActiveSupport::ParameterFilter.new(Rails.configuration.filter_parameters).filter(headers) }, # rubocop:disable Metrics/LineLength
             method: request.method,
-            size: request.content_length,
+            size: request.content_length
           }
         }
       end,
