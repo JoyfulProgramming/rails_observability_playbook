@@ -46,7 +46,8 @@ RSpec.describe Todos::Refresh do
       it 'records the API details in the trace' do
         VCR.use_cassette('all todos') do
           subject.call_async
-          http_span = spans.find_one!("http.method" => "GET")
+
+          http_span = spans.find_one!(attrs: { "http.method" => "GET" })
           aggregate_failures do
             expect(http_span.attrs).to eq(
               "net.peer.name" => "jsonplaceholder.typicode.com",

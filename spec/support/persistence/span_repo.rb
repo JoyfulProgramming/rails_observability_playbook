@@ -20,8 +20,8 @@ module Persistence
       self.class.new(spans: group_by(&:trace_id).find { |_trace_id, spans| spans.count > 1 }.second)
     end
 
-    def find_one!(query = {}, &block)
-      block = to_block(query) if query.any? && !block_given?
+    def find_one!(attrs: {}, &block)
+      block = to_block(attrs) if attrs.any? && !block_given?
       if one?(&block)
         find(&block)
       elsif empty?(&block)
