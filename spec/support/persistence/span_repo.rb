@@ -22,12 +22,13 @@ module Persistence
 
     def find_one!(attrs: {}, &block)
       block = to_block(attrs) if attrs.any? && !block_given?
+
       if one?(&block)
         find(&block)
       elsif empty?(&block)
         raise_none_found
       else
-        raise_too_many_found
+        raise_too_many_found(&block)
       end
     end
 
@@ -39,13 +40,14 @@ module Persistence
       raise ArgumentError, 'Nothing found'
     end
 
-    def raise_too_many_found
-      raise ArgumentError, 'Too many found'
+    def raise_too_many_found(&block)
+      matched = select(&block)
+      raise ArgumentError, "Too many found: #{matched}"
     end
 
     def to_block(query)
       lambda do |object|
-        object.attrs.deep_symbolize_keys.slice(*query.deep_symbolize_keys.keys) == query.deep_symbolize_keys
+        object.attrs.deep_stringify_keys.slice(*query.deep_stringify_keys.keys) == query.deep_stringify_keys
       end
     end
   end
