@@ -11,7 +11,11 @@ module Tracing
     end
 
     def finished_spans
-      Rails.configuration.open_telemetry_exporter.finished_spans
+      open_telemetry_exporter.finished_spans
+    end
+
+    def open_telemetry_exporter
+      Rails.configuration.open_telemetry_exporter
     end
   end
 end

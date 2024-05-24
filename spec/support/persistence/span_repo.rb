@@ -20,7 +20,8 @@ module Persistence
       self.class.new(spans: group_by(&:trace_id).find { |_trace_id, spans| spans.count > 1 }.second)
     end
 
-    def find_one!(&block)
+    def find_one!(query = {}, &block)
+      block = to_block(query) if query.any? && !block_given?
       if one?(&block)
         find(&block)
       elsif empty?(&block)
@@ -40,6 +41,12 @@ module Persistence
 
     def raise_too_many_found
       raise ArgumentError, 'Too many found'
+    end
+
+    def to_block(query)
+      lambda do |object|
+        object.attrs.deep_symbolize_keys.slice(*query.deep_symbolize_keys.keys) == query.deep_symbolize_keys
+      end
     end
   end
 end

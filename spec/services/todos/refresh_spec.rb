@@ -9,6 +9,7 @@ RSpec.describe Todos::Refresh do
     Sidekiq::Testing.inline! do
       example.run
     end
+    open_telemetry_exporter.reset
   end
 
   describe '#call_async' do
@@ -42,6 +43,22 @@ RSpec.describe Todos::Refresh do
     end
 
     context 'it logs the API details' do
+      it 'records the API details in the trace' do
+        VCR.use_cassette('all todos') do
+          subject.call_async
+          http_span = spans.find_one!("http.method" => "GET")
+          aggregate_failures do
+            expect(http_span.attrs).to eq(
+              "net.peer.name" => "jsonplaceholder.typicode.com",
+              "http.method" => "GET",
+              "http.status_code" => 200,
+              "http.url" => "https://jsonplaceholder.typicode.com/todos",
+              "faraday.adapter.name" => "FaradayLogging"
+            )
+          end
+        end
+      end
+
       it 'logs the API details' do
         VCR.use_cassette('all todos') do
           info_log = capture_logs { subject.call_async }
