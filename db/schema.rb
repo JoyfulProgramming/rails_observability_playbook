@@ -22,7 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_08_093443) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.integer "number_of_profile_visits"
+    t.integer "number_of_profile_visits", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

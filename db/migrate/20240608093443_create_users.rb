@@ -3,7 +3,7 @@
 class CreateUsers < ActiveRecord::Migration[7.0]
   def change
     create_table :users do |t|
-      t.integer :number_of_profile_visits
+      t.integer :number_of_profile_visits, default: 0, null: false
 
       t.timestamps
     end
