@@ -8,14 +8,14 @@ module Typicode
     attribute :completed, Dry.Types::Bool
 
     def self.all
-      api.get('/todos').body.map { |todo| new(todo) }
+      api.get("/todos").body.map { |todo| new(todo) }
     end
 
     def self.api
-      Faraday.new(url: 'https://jsonplaceholder.typicode.com/todos') do |conn|
+      Faraday.new(url: "https://jsonplaceholder.typicode.com/todos") do |conn|
         conn.use FaradayLogging
         conn.request :json
-        conn.response :json, parser_options: { symbolize_names: true }
+        conn.response :json, parser_options: {symbolize_names: true}
       end
     end
   end

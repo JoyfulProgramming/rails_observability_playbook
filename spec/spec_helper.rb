@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'dry/struct'
-require 'support/vcr'
-require 'support/logging/test_helper'
-require 'support/persistence/span'
-require 'support/persistence/span_repo'
-require 'support/persistence/trace'
-require 'support/persistence/trace_repo'
-require 'support/tracing/test_helper'
-require 'super_diff/rspec-rails'
+require "dry/struct"
+require "support/vcr"
+require "support/logging/test_helper"
+require "support/persistence/span"
+require "support/persistence/span_repo"
+require "support/persistence/trace"
+require "support/persistence/trace_repo"
+require "support/tracing/test_helper"
+require "super_diff/rspec-rails"
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -65,6 +65,6 @@ RSpec::Matchers.define :include_payload do |expected|
   end
 
   failure_message_when_negated do |actual|
-    'N/A'
+    "N/A"
   end
 end

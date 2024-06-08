@@ -6,7 +6,7 @@ class FaradayLogging < ::Faraday::Middleware
     Rails.logger.info(
       message: "#{env.method.to_s.upcase} #{env.url}",
       event: {
-        name: 'http.request.made'
+        name: "http.request.made"
       },
       http: {
         request: {

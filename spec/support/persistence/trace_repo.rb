@@ -8,20 +8,20 @@ module Persistence
       @traces = spans.group_by(&:hex_trace_id).map { |id, spandatas| Trace.from_id_and_spandatas(id:, spandatas:) }
     end
 
-    def each(&block)
-      @traces.each(&block)
+    def each(&)
+      @traces.each(&)
     end
 
     def root!
       find_one!(&:root?)
     end
 
-    def empty?(&block)
-      count(&block).zero?
+    def empty?(&)
+      count(&).zero?
     end
 
-    def find_one!(&block)
-      if one?(&block)
+    def find_one!(&)
+      if one?(&)
         find(&block)
       elsif empty?(&block)
         raise_none_found
@@ -31,11 +31,11 @@ module Persistence
     end
 
     def raise_none_found
-      raise ArgumentError, 'Nothing found'
+      raise ArgumentError, "Nothing found"
     end
 
     def raise_too_many_found
-      raise ArgumentError, 'Too many found'
+      raise ArgumentError, "Too many found"
     end
   end
 end

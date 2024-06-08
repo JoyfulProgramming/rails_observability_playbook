@@ -8,8 +8,8 @@ module Persistence
       @spans = spans.map { |span_or_spandata| Span.from_span_or_spandata(span_or_spandata) }
     end
 
-    def each(&block)
-      @spans.each(&block)
+    def each(&)
+      @spans.each(&)
     end
 
     def in_code_namespace(namespace)
@@ -32,16 +32,16 @@ module Persistence
       end
     end
 
-    def empty?(&block)
-      count(&block).zero?
+    def empty?(&)
+      count(&).zero?
     end
 
     def raise_none_found
-      raise ArgumentError, 'Nothing found'
+      raise ArgumentError, "Nothing found"
     end
 
-    def raise_too_many_found(&block)
-      matched = select(&block)
+    def raise_too_many_found(&)
+      matched = select(&)
       raise ArgumentError, "Too many found:\n#{matched.ai}"
     end
 

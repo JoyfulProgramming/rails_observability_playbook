@@ -36,7 +36,7 @@ module Logging
 
           root = hash
           log.each_exception do |exception, i|
-            name       = i.zero? ? :exception : :cause
+            name = i.zero? ? :exception : :cause
             root[name] = {
               name: exception.class.name,
               message: exception.message,

@@ -45,7 +45,7 @@ module RailsObservabilityPlaybook
               .to_h
               .select { |key, _value| key.start_with?('HTTP_') }
               .transform_keys { |key| key.sub(/^HTTP_/, '').downcase }
-              .then { |headers| ActiveSupport::ParameterFilter.new(Rails.configuration.filter_parameters).filter(headers) }, # rubocop:disable Metrics/LineLength
+              .then { |headers| ActiveSupport::ParameterFilter.new(Rails.configuration.filter_parameters).filter(headers) },
             method: request.method,
             size: request.content_length
           }

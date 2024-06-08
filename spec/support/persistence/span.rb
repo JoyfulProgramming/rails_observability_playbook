@@ -17,7 +17,7 @@ module Persistence
     end
 
     def code_namespace
-      attrs['code.namespace'] || attrs['messaging.sidekiq.job_class'] || ''
+      attrs["code.namespace"] || attrs["messaging.sidekiq.job_class"] || ""
     end
 
     def producer?
