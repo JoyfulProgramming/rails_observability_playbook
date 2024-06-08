@@ -1,0 +1,5 @@
+ignore:
+  - Style/Documentation
+  - Metrics/BlockLength
+  - Layout/LineLength
+  - Style/FrozenStringLiteralComment
