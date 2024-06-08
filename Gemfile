@@ -12,8 +12,7 @@ gem 'importmap-rails'
 gem 'jbuilder'
 gem 'opentelemetry-exporter-otlp', '~> 0.26.3'
 gem 'opentelemetry-instrumentation-all',
-    github: 'joyfulprogramming/opentelemetry-ruby-contrib',
-    branch: 'main',
+    path: '../opentelemetry-ruby-contrib',
     glob: 'instrumentation/*/*.gemspec'
 gem 'opentelemetry-sdk', '~> 1.4'
 gem 'pg', '~> 1.1'

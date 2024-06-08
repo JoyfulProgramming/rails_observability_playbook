@@ -42,7 +42,7 @@ module Persistence
 
     def raise_too_many_found(&block)
       matched = select(&block)
-      raise ArgumentError, "Too many found: #{matched}"
+      raise ArgumentError, "Too many found:\n#{matched.ai}"
     end
 
     def to_block(query)

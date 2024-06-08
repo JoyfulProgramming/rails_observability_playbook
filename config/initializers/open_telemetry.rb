@@ -36,7 +36,6 @@ OpenTelemetry::SDK.configure do |c|
   }
   c.use 'OpenTelemetry::Instrumentation::ConcurrentRuby'
   c.use 'OpenTelemetry::Instrumentation::Faraday', { span_kind: :client, peer_service: nil }
-  c.use 'OpenTelemetry::Instrumentation::Net::HTTP', { untraced_hosts: [] }
   c.use 'OpenTelemetry::Instrumentation::PG',
         { peer_service: nil, db_statement: :obfuscate, obfuscation_limit: 2000 }
   c.use 'Instrumentation: OpenTelemetry::Instrumentation::Rails'

@@ -54,7 +54,7 @@ RSpec.describe Todos::Refresh do
               "http.method" => "GET",
               "http.status_code" => 200,
               "http.url" => "https://jsonplaceholder.typicode.com/todos",
-              "faraday.adapter.name" => "FaradayLogging"
+              "faraday.adapter.name" => "net_http"
             )
           end
         end
