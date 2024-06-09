@@ -17,7 +17,7 @@ gem "opentelemetry-instrumentation-all",
 gem "opentelemetry-sdk", "~> 1.4"
 gem "pg", "~> 1.1"
 gem "propshaft"
-gem "puma", "~> 5.0"
+gem "puma", "~> 6"
 gem "rails", "~> 7"
 gem "rails_semantic_logger", "~> 4.14"
 gem "redis", "~> 4.0"
