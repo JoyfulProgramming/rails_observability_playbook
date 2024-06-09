@@ -41,7 +41,7 @@ module Logging
               name: exception.class.name,
               message: exception.message,
               stack_trace: exception.backtrace
-            }.merge(context: decorated_exception(exception).context)
+            }
             root = root[name]
           end
         end
@@ -52,15 +52,6 @@ module Logging
           BASE = %i[headers format method params status status_message url].freeze
           RAILS = %i[action controller].freeze
           ALL = BASE + RAILS
-        end
-
-        def decorated_exception(exception)
-          exception_decorator_class(exception).new(exception)
-        end
-
-        def exception_decorator_class(exception)
-          "Logging::ExceptionDecorators::#{exception.class.name}Decorator".safe_constantize ||
-            Logging::ExceptionDecorators::BaseDecorator
         end
       end
     end
