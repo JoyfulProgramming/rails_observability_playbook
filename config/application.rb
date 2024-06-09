@@ -1,6 +1,6 @@
-require_relative 'boot'
+require_relative "boot"
 
-require 'rails/all'
+require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -13,13 +13,13 @@ module RailsObservabilityPlaybook
 
     config.generators do |g|
       g.test_framework :rspec,
-                       fixtures: false,
-                       view_specs: true,
-                       helper_specs: false,
-                       routing_specs: false,
-                       controller_specs: true,
-                       request_specs: true
-      g.fixture_replacement :factory_bot, dir: 'spec/factories'
+        fixtures: false,
+        view_specs: true,
+        helper_specs: false,
+        routing_specs: false,
+        controller_specs: true,
+        request_specs: true
+      g.fixture_replacement :factory_bot, dir: "spec/factories"
       g.orm :active_record, primary_key_type: :uuid
     end
 
@@ -30,11 +30,11 @@ module RailsObservabilityPlaybook
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join("lib")
 
     config.log_tags = {
       event: {
-        name: 'http.request.handled'
+        name: "http.request.handled"
       },
       http: lambda do |request|
         {
@@ -43,8 +43,8 @@ module RailsObservabilityPlaybook
             header: request
               .headers
               .to_h
-              .select { |key, _value| key.start_with?('HTTP_') }
-              .transform_keys { |key| key.sub(/^HTTP_/, '').downcase }
+              .select { |key, _value| key.start_with?("HTTP_") }
+              .transform_keys { |key| key.sub(/^HTTP_/, "").downcase }
               .then { |headers| ActiveSupport::ParameterFilter.new(Rails.configuration.filter_parameters).filter(headers) },
             method: request.method,
             size: request.content_length
