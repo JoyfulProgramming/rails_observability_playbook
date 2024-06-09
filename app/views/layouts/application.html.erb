@@ -11,6 +11,10 @@
   </head>
 
   <body>
+    <% if current_user %>
+    <p>Signed In as <%= current_user.email %></p><p><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></p>
+
+    <% end %>
     <%= yield %>
   </body>
 </html>
