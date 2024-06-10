@@ -1,0 +1,6 @@
+logs:
+  - type: tcp
+    port: 10518
+    service: ruby
+    source: ruby
+    sourcecategory: sourcecode
