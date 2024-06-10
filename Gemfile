@@ -59,3 +59,5 @@ gem "foreman", "~> 0.88.1"
 
 gem "devise", "~> 4.9"
 
+
+gem "net_tcp_client", "~> 2.2"
