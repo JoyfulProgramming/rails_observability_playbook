@@ -28,7 +28,6 @@ OpenTelemetry::SDK.configure do |c|
     allowed_rack_request_headers: {},
     allowed_rack_response_headers: {}
   }
-
   c.use "OpenTelemetry::Instrumentation::ActionPack"
   c.use "OpenTelemetry::Instrumentation::ActiveRecord"
   c.use "OpenTelemetry::Instrumentation::ActionView", {
@@ -38,10 +37,9 @@ OpenTelemetry::SDK.configure do |c|
   c.use "OpenTelemetry::Instrumentation::Faraday", {span_kind: :client, peer_service: nil}
   c.use "OpenTelemetry::Instrumentation::PG",
     {peer_service: nil, db_statement: :obfuscate, obfuscation_limit: 2000}
-  c.use "Instrumentation: OpenTelemetry::Instrumentation::Rails"
   c.use "OpenTelemetry::Instrumentation::Rake"
 
-  c.add_span_processor(Rails.configuration.open_telemetry_span_processor)
+  # c.add_span_processor(Rails.configuration.open_telemetry_span_processor)
 
   c.logger = Logger.new(IO::NULL) if Rails.env.test?
 end
