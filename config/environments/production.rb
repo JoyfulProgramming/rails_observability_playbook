@@ -44,7 +44,11 @@ Rails.application.configure do
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
-  config.log_level = :info
+  config.log_level = if ENV["LOG_LEVEL"].present?
+    ENV["LOG_LEVEL"].downcase.strip.to_sym
+  else
+    :info
+  end
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
