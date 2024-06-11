@@ -32,6 +32,7 @@ module RailsObservabilityPlaybook
     # config.eager_load_paths << Rails.root.join("extras")
     config.autoload_paths << Rails.root.join("lib")
 
+    config.rails_semantic_logger.format = Logging::SemanticLogger::Formatters::OpenTelemetryJson.new
     config.log_tags = {
       event: {
         name: "http.request.handled"
