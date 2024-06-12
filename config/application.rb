@@ -32,7 +32,7 @@ module RailsObservabilityPlaybook
     # config.eager_load_paths << Rails.root.join("extras")
     config.autoload_paths << Rails.root.join("lib")
 
-    config.rails_semantic_logger.semantic = false
+    config.rails_semantic_logger.semantic = true
 
     config.log_tags = {
       event: {
