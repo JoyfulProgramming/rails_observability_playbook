@@ -61,3 +61,5 @@ gem "devise", "~> 4.9"
 
 
 gem "net_tcp_client", "~> 2.2"
+
+gem "appsignal", "~> 3.7"
