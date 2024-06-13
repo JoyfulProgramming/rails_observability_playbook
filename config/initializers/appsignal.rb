@@ -77,7 +77,7 @@ Rails.application.config.after_initialize do
   Rails.application.configure do
     config.semantic_logger.add_appender(
       appender: SemanticLogger::Appender::AppSignalHttp.new(
-        api_key: ENV.fetch("APPSIGNAL_API_KEY"),
+        api_key: ENV["APPSIGNAL_API_KEY"],
         url: "https://appsignal-endpoint.net/logs",
         formatter: AppSignalJson.new
       )

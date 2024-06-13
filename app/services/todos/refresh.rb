@@ -4,7 +4,7 @@ module Todos
   # A service that refreshes todos.
   class Refresh
     def call_async
-      RefreshTodosJob.perform_async
+      RefreshTodosJob.perform_later
     end
 
     def call
