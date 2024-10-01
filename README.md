@@ -18,10 +18,6 @@ I do the hard work of figuring out Open Telemetry in Rails so you don't have to.
 
 I'll be deploying this to production sites when it's stable enough.
 
-## Details
-
-[Visit the app deployed to Heroku here](https://rails-observability-playbook-7734a40c8a6f.herokuapp.com/)
-
 ### Functionality
 
 * Single page to the app at the root
