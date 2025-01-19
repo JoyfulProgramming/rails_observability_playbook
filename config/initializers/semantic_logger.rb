@@ -12,8 +12,8 @@ if Rails.env.development?
 end
 
 Rails.application.config.after_initialize do
-  # Active Job
   if Rails.configuration.rails_semantic_logger.semantic
+    # Active Job
     if defined?(::ActiveJob)
       RailsSemanticLogger.swap_subscriber(
         RailsSemanticLogger::ActiveJob::LogSubscriber,
@@ -22,37 +22,37 @@ Rails.application.config.after_initialize do
       )
     end
 
-    # # Active Record
-    # if defined?(::ActiveRecord)
-    #   require "active_record/log_subscriber"
+    # Active Record
+    if defined?(::ActiveRecord)
+      require "active_record/log_subscriber"
 
-    #   RailsSemanticLogger.swap_subscriber(
-    #     ::ActiveRecord::LogSubscriber,
-    #     RailsSemanticLogger::ActiveRecord::LogSubscriber,
-    #     :active_record
-    #   )
-    # end
+      RailsSemanticLogger.swap_subscriber(
+        ::ActiveRecord::LogSubscriber,
+        RailsSemanticLogger::ActiveRecord::LogSubscriber,
+        :active_record
+      )
+    end
 
-    # # Action Controller
-    # if defined?(::ActionController)
-    #   require "action_controller/log_subscriber"
+    # Action Controller
+    if defined?(::ActionController)
+      require "action_controller/log_subscriber"
 
-    #   RailsSemanticLogger.swap_subscriber(
-    #     ::ActionController::LogSubscriber,
-    #     RailsSemanticLogger::ActionController::LogSubscriber,
-    #     :action_controller
-    #   )
-    # end
+      RailsSemanticLogger.swap_subscriber(
+        ::ActionController::LogSubscriber,
+        RailsSemanticLogger::ActionController::LogSubscriber,
+        :action_controller
+      )
+    end
 
-    # # Action Mailer
-    # if defined?(::ActionMailer)
-    #   require "action_mailer/log_subscriber"
+    # Action Mailer
+    if defined?(::ActionMailer)
+      require "action_mailer/log_subscriber"
 
-    #   RailsSemanticLogger.swap_subscriber(
-    #     ::ActionMailer::LogSubscriber,
-    #     RailsSemanticLogger::ActionMailer::LogSubscriber,
-    #     :action_mailer
-    #   )
-    # end
+      RailsSemanticLogger.swap_subscriber(
+        ::ActionMailer::LogSubscriber,
+        RailsSemanticLogger::ActionMailer::LogSubscriber,
+        :action_mailer
+      )
+    end
   end
 end
